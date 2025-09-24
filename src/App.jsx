@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react'
-import { Provider, useSelector } from 'react-redux'
-import Dashboard from './components/Dashboards'
+import { useSelector } from 'react-redux'
 import VitalsInputModal from './components/VitalsInputModal'
 import SmartAlerts from './components/SmartAlerts'
 import { Plus } from 'lucide-react'
