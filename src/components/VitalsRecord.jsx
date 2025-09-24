@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 
 const VitalsRecord = () => {
   const dispatch = useDispatch()
-  const { vitals, currentDate } = useSelector(state => state.vitals)
+  const { vitals, alerts, currentDate } = useSelector(state => state.vitals)
 
   const todayVitals = vitals.filter(vital => vital.date === currentDate)
   const latestVitals = todayVitals[todayVitals.length - 1]
@@ -82,10 +82,6 @@ const VitalsRecord = () => {
                   className="input-field w-auto"
                 />
               </div>
-              <button className="btn-primary flex items-center space-x-2">
-                <Bell className="w-4 h-4" />
-                <span>Alerts</span>
-              </button>
             </div>
           </div>
         </div>

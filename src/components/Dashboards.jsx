@@ -6,7 +6,7 @@ import OxyChart from './OxyChart'
 import { useState } from 'react';
 
 const Dashboard = () => {
-  const { vitals, currentDate } = useSelector(state => state.vitals)
+  const { vitals,alerts, currentDate } = useSelector(state => state.vitals)
   const [value, setValue] = useState("Dashboard")
   const navigate = useNavigate()
 
@@ -90,6 +90,17 @@ const Dashboard = () => {
       bgColor: 'bg-indigo-50'
     }
   ]
+
+  const calculateStats = (arr, key) => {
+  const values = arr.map(item => item[key]);
+  const min = Math.min(...values);
+  const max = Math.max(...values);
+  const avg = values.reduce((sum, val) => sum + val, 0) / values.length;
+  return { min, max, avg };
+};
+
+const diaStats = vitals.length > 0 ? calculateStats(vitals, 'bloodPressureDia') : 0
+
 
   return (
     <div className="bg-gray-50 p-5">
@@ -183,14 +194,13 @@ const Dashboard = () => {
 
         {/* Overview of vitals */}
         <h3 className="text-lg font-semibold mb-4 text-gray-700">Overview of Vitals</h3>
-        {/* Blood Pressure */}
-        <p className="font-medium mb-2">Blood Pressure</p>
-        <p className="text-sm text-gray-500 mb-2">
-              110 Min &nbsp; 118 Average &nbsp; 118 Max
-            </p>
         <div className="w-full flex gap-4 items-stretch">
   {/* Blood Chart */}
   <div className="vital-card w-full flex-1">
+     <p className="font-medium mb-2">Blood Pressure</p>
+        <p className="text-sm text-gray-500 mb-2">
+              {diaStats?.min ?? 0} Min &nbsp; {diaStats.avg ?? 0} Average &nbsp; {diaStats.max ?? 0} Max
+            </p>
     <BloodChart />
   </div>
 
@@ -198,18 +208,18 @@ const Dashboard = () => {
   <div className="flex flex-col gap-3">
     <div className="vital-card flex flex-col items-center justify-center flex-1">
       <p className="font-medium mb-2">Pulse</p>
-      <p className="text-2xl font-bold text-pink-500">110 BPM</p>
+      <p className="text-2xl font-bold text-pink-500">{vitals[vitals.length-1]?.heartRate ?? 0} BPM</p>
     </div>
     <div className="vital-card flex flex-col items-center justify-center flex-1">
       <p className="font-medium mb-2">Weight</p>
-      <p className="text-2xl font-bold">90.0 kgs</p>
+      <p className="text-2xl font-bold">{vitals[vitals.length-1]?.weight ?? 0} kgs</p>
     </div>
   </div>
 
   {/* Oxy Level */}
   <div className="vital-card w-full flex-1">
     <p className="font-medium mb-2">Oxy Level</p>
-    <p className="text-2xl font-bold text-green-500 mb-2">95%</p>
+    <p className="text-2xl font-bold text-green-500 mb-2">{vitals[vitals.length-1]?.pulseOx ? vitals[vitals.length-1]?.pulseOx+"%" : 0+"%"}</p>
     <OxyChart />
     <p className="text-xs mt-1 text-gray-500">Min SpO2 / Max PR</p>
   </div>

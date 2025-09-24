@@ -43,10 +43,10 @@ const SmartAlerts = ({ isOpen, onClose }) => {
   if (!isOpen) return null
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+    <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50">
       <div className="bg-white rounded-lg shadow-xl w-full max-w-2xl max-h-[90vh] overflow-y-auto">
         {/* Header */}
-        <div className="bg-primary-600 text-white p-6 rounded-t-lg flex justify-between items-center">
+        <div className="bg-blue-900 text-white p-6 rounded-t-lg flex justify-between items-center">
           <div className="flex items-center space-x-3">
             <AlertTriangle className="w-6 h-6" />
             <h2 className="text-xl font-semibold">Smart Health Alerts</h2>
@@ -123,7 +123,6 @@ const SmartAlerts = ({ isOpen, onClose }) => {
                   </button>
                   <button
                     onClick={() => {
-                      // This would typically open a doctor consultation or emergency contact
                       alert('This would open doctor consultation or emergency contact')
                     }}
                     className="btn-primary"

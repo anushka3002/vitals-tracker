@@ -1,20 +1,15 @@
 import { Line } from 'react-chartjs-2';
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from 'chart.js';
+import { useSelector } from 'react-redux';
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
 
-const oxygenData = [
-  { date: "2025-09-18", oxygenLevel: 98 },
-  { date: "2025-09-19", oxygenLevel: 97 },
-  { date: "2025-09-20", oxygenLevel: 96 },
-  { date: "2025-09-21", oxygenLevel: 95 },
-  { date: "2025-09-22", oxygenLevel: 97 },
-  { date: "2025-09-23", oxygenLevel: 99 },
-  { date: "2025-09-24", oxygenLevel: 94 },
-];
+const OxygenChart = () => {
 
-const dates = oxygenData.map(d => d.date);
-const levels = oxygenData.map(d => d.oxygenLevel);
+  const { vitals } = useSelector(state => state.vitals)
+
+const dates = vitals.length > 0 ? vitals?.map(d => d.date) : 0;
+const levels = vitals.length > 0 ? vitals?.map(d => d.pulseOx) : 0;
 
 const data = {
   labels: dates,
@@ -45,6 +40,10 @@ const options = {
   },
 };
 
-const OxygenChart = () => <Line data={data} options={options} />;
+  return (
+<div>{vitals? <Line data={data} options={options} />: <p>Oxygen chart</p>}</div>
+  )
+}
+
 
 export default OxygenChart;

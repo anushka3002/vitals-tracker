@@ -4,6 +4,8 @@ A comprehensive health vitals tracking web application built with React.js, Tail
 
 ## Features
 
+`Click on Heath Records on sidebar to navigate to "See your vitals"`
+
 ### 🏥 Vitals Input Screen
 - **Manual Entry**: Enter all essential health vitals including:
   - Height & Weight (with automatic BMI calculation)

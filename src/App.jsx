@@ -1,5 +1,5 @@
-import { useState } from 'react'
-import { Provider } from 'react-redux'
+import { useEffect, useState } from 'react'
+import { Provider, useSelector } from 'react-redux'
 import Dashboard from './components/Dashboards'
 import VitalsInputModal from './components/VitalsInputModal'
 import SmartAlerts from './components/SmartAlerts'
@@ -9,6 +9,13 @@ import { Router } from './Routers'
 function App() {
   const [showVitalsModal, setShowVitalsModal] = useState(false)
   const [showAlerts, setShowAlerts] = useState(false)
+  const alerts = useSelector(state => state.vitals.alerts)
+
+  useEffect(() => {
+    if (alerts.length > 0) {
+      setShowAlerts(true)
+    }
+  }, [alerts])
 
   return (
       <div>

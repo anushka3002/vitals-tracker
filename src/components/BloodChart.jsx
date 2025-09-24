@@ -1,21 +1,16 @@
 import { Line } from 'react-chartjs-2';
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from 'chart.js';
+import { useSelector } from 'react-redux';
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
 
-const bloodPressureData = [
-  { date: "2025-09-18", bloodPressureSys: 120, bloodPressureDia: 80 },
-  { date: "2025-09-19", bloodPressureSys: 118, bloodPressureDia: 78 },
-  { date: "2025-09-20", bloodPressureSys: 115, bloodPressureDia: 76 },
-  { date: "2025-09-21", bloodPressureSys: 119, bloodPressureDia: 79 },
-  { date: "2025-09-22", bloodPressureSys: 117, bloodPressureDia: 77 },
-  { date: "2025-09-23", bloodPressureSys: 110, bloodPressureDia: 70 },
-  { date: "2025-09-24", bloodPressureSys: 44,  bloodPressureDia: 44 }
-];
+const BloodChart = () => {
 
-const dates = bloodPressureData.map(d => d.date);
-const systolic = bloodPressureData.map(d => d.bloodPressureSys);
-const diastolic = bloodPressureData.map(d => d.bloodPressureDia);
+const { vitals } = useSelector(state => state.vitals)
+
+const dates = vitals?.map(d => d.date);
+const systolic = vitals?.map(d => d.bloodPressureSys);
+const diastolic = vitals?.map(d => d.bloodPressureDia);
 
 const data = {
   labels: dates,
@@ -57,8 +52,7 @@ const options = {
   },
 };
 
-const BloodChart = () => {
-  return <Line data={data} options={options} />;
+  return <div>{vitals? <Line data={data} options={options} /> : <p>Blood chart</p>}</div>;
 };
 
 export default BloodChart;
