@@ -1,34 +1,33 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { Provider } from 'react-redux'
+import Dashboard from './components/Dashboards'
+import VitalsInputModal from './components/VitalsInputModal'
+import SmartAlerts from './components/SmartAlerts'
+import { Plus } from 'lucide-react'
+import { Router } from './Routers'
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [showVitalsModal, setShowVitalsModal] = useState(false)
+  const [showAlerts, setShowAlerts] = useState(false)
 
   return (
-    <>
       <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
+      <Router/>
+       <button
+          onClick={() => setShowVitalsModal(true)}
+          className="fixed flex cursor-pointer bottom-6 right-6 bg-blue-600 hover:bg-blue-400 text-white p-4 rounded-xl shadow-lg hover:shadow-xl transition-all duration-200 z-50"
+        >
+          <Plus className="w-6 h-6" />
+          <span>Add Vitals</span>
         </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
+        {showVitalsModal && (
+          <VitalsInputModal onClose={() => setShowVitalsModal(false)} />
+        )}
+         <SmartAlerts 
+          isOpen={showAlerts} 
+          onClose={() => setShowAlerts(false)} 
+        />
       </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
   )
 }
 
