@@ -1,8 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit'
 
+const storedVitals = JSON.parse(localStorage.getItem('vitalsData')) || []
+const storedAlerts = JSON.parse(localStorage.getItem('alertsData')) || []
+
 const initialState = {
-  vitals: [],
-  alerts: [],
+  vitals: storedVitals,
+  alerts: storedAlerts,
   currentDate: new Date().toISOString().split('T')[0]
 }
 
@@ -17,14 +20,21 @@ const vitalsSlice = createSlice({
         timestamp: new Date().toISOString(),
         date: new Date().toISOString().split('T')[0]
       }
+
       state.vitals.push(newVitals)
-      
+
       const alerts = generateAlerts(newVitals)
       state.alerts = [...state.alerts, ...alerts]
+
+      localStorage.setItem('vitalsData', JSON.stringify(state.vitals))
+      localStorage.setItem('alertsData', JSON.stringify(state.alerts))
     },
+
     clearAlerts: (state) => {
       state.alerts = []
+      localStorage.setItem('alertsData', JSON.stringify([]))
     },
+
     setCurrentDate: (state, action) => {
       state.currentDate = action.payload
     }
@@ -33,7 +43,7 @@ const vitalsSlice = createSlice({
 
 const generateAlerts = (vitals) => {
   const alerts = []
-  
+
   if (vitals.heartRate > 120) {
     alerts.push({
       id: Date.now().toString() + '_hr',
@@ -43,7 +53,7 @@ const generateAlerts = (vitals) => {
       recommendation: 'Take rest and monitor your heart rate.'
     })
   }
-  
+
   if (vitals.pulseOx < 95) {
     alerts.push({
       id: Date.now().toString() + '_spo2',
@@ -53,7 +63,7 @@ const generateAlerts = (vitals) => {
       recommendation: 'Consult a doctor immediately.'
     })
   }
-  
+
   if (vitals.bloodPressureSys > 140 || vitals.bloodPressureDia > 90) {
     alerts.push({
       id: Date.now().toString() + '_bp',
@@ -63,7 +73,7 @@ const generateAlerts = (vitals) => {
       recommendation: 'Monitor your blood pressure and consult a doctor.'
     })
   }
-  
+
   if (vitals.temperature > 100.4) {
     alerts.push({
       id: Date.now().toString() + '_temp',
@@ -73,7 +83,7 @@ const generateAlerts = (vitals) => {
       recommendation: 'Rest and monitor your temperature. Consider consulting a doctor.'
     })
   }
-  
+
   if (vitals.bloodGlucose > 140) {
     alerts.push({
       id: Date.now().toString() + '_glucose',
@@ -83,7 +93,7 @@ const generateAlerts = (vitals) => {
       recommendation: 'Monitor your blood sugar and follow your diabetes management plan.'
     })
   }
-  
+
   return alerts
 }
 

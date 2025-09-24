@@ -1,6 +1,7 @@
 import { Calendar, Bell, Activity, Heart, Thermometer, Droplets, Scale } from 'lucide-react'
 import { setCurrentDate } from '../redux/vitalSlice'
 import { useDispatch, useSelector } from 'react-redux'
+import { formatDate, formatDateTime } from '../constant'
 
 const VitalsRecord = () => {
   const dispatch = useDispatch()
@@ -22,6 +23,7 @@ const VitalsRecord = () => {
       title: 'Heart Rate',
       value: latestVitals?.heartRate ? `${latestVitals.heartRate} BPM` : '--',
       icon: Heart,
+      date:latestVitals?.date ?? "--",
       color: 'text-white',
       bgColor: 'bg-blue-600'
     },
@@ -63,6 +65,8 @@ const VitalsRecord = () => {
       bgColor: 'bg-blue-600'
     }
   ]
+
+  console.log(vitals,"vitals")
 
   return (
     <div className="min-h-screen bg-white">
@@ -108,7 +112,7 @@ const VitalsRecord = () => {
                       <Calendar className="w-5 h-5 text-gray-400 mr-2" />
                       <div>
                       <p className="text-sm font-medium text-gray-600 mb-2 mt-1">Uploaded date and time</p>
-                      <p className="text-sm font-medium text-gray-900">10/10/2023, 6:14PM</p>
+                      <p className="text-sm font-medium text-gray-900">{latestVitals?.date ? (formatDate(latestVitals?.date)) : "--"}, {latestVitals?.timestamp ? formatDateTime(latestVitals.timestamp) : "--"}</p>
                       </div>
                     </div>
                     <button className='w-full px-3 py-2.5 text-md font-medium text-blue-600 border rounded-md mt-5'>Track progress</button>

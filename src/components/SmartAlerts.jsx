@@ -84,7 +84,6 @@ const SmartAlerts = ({ isOpen, onClose }) => {
                 </p>
               </div>
 
-              {/* Individual Alerts */}
               {alerts.map((alert) => (
                 <div key={alert.id} className={`rounded-lg border p-4 ${getAlertStyles(alert.type)}`}>
                   <div className="flex items-start space-x-3">
@@ -93,7 +92,6 @@ const SmartAlerts = ({ isOpen, onClose }) => {
                       <h4 className="font-semibold text-lg mb-2">{alert.message}</h4>
                       <p className="text-sm mb-3">{alert.description}</p>
                       
-                      {/* Recommendation */}
                       <div className="bg-white bg-opacity-50 rounded-lg p-3 border border-current border-opacity-20">
                         <div className="flex items-center space-x-2 mb-2">
                           {getRecommendationIcon(alert.message)}
@@ -106,7 +104,6 @@ const SmartAlerts = ({ isOpen, onClose }) => {
                 </div>
               ))}
 
-              {/* Action Buttons */}
               <div className="flex justify-between items-center pt-6 border-t border-gray-200">
                 <button
                   onClick={handleClearAlerts}
